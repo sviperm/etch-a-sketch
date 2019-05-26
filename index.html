@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Etch-A-Sketch</title>
+    <style>
+        body {
+            margin: 15px 0;
+            background-color: #302D86;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 700px;
+            height: 100%;
+        }
+
+        .settings {
+            margin: 0 0 20px 0;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .btn {
+            margin: 0 2px;
+            padding: 0;
+            width: 130px;
+            border: 0;
+            border-radius: .25em;
+            color: white;
+            background: #B4543C;
+            font-size: 1.15em;
+        }
+
+        .btn:hover {
+            cursor: pointer;
+        }
+
+        .btn:focus {
+            outline: 1px solid #CC7266;
+            box-shadow: 0 0 0 2pt #CC7266;
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            appearance: none;
+            outline: 0;
+            box-shadow: none;
+            border: 0 !important;
+            background: #B4543C;
+            font-size: 1.15em;
+        }
+
+        .select {
+            margin: 0 2px;
+            position: relative;
+            display: flex;
+            min-width: 130px;
+            height: 2.4em;
+            line-height: 2.4em;
+            background: #B4543C;
+            overflow: hidden;
+            border-radius: .25em;
+        }
+
+        select {
+            flex: 1;
+            padding: 0 .5em;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 1em;
+            background: rgb(136, 65, 47);
+            cursor: pointer;
+            pointer-events: none;
+            -webkit-transition: .25s all ease;
+            -o-transition: .25s all ease;
+            transition: .25s all ease;
+            color: white;
+        }
+
+        .select:hover::after {
+            color: #302D86;
+        }
+
+
+        .sketch {
+            display: flex;
+            justify-content: center;
+        }
+
+        .grid {
+            height: 85vmin;
+            width: 85vmin;
+            border: 1px solid;
+            display: grid;
+            gap: 1px;
+            background-color: black;
+        }
+
+        .grid>div {
+            background-color: #e4e4e4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="settings">
+            <button class="btn" id="clear">Clear</button>
+            <button class="btn" id="change_grid">Change grid</button>
+            <div class="select">
+                <select id="color_selector">
+                    <option selected value="1">B&W</option>
+                    <option value="2">Random</option>
+                </select>
+            </div>
+        </div>
+        <div class="sketch">
+            <div class="grid"></div>
+        </div>
+    </div>
+</body>
+<script>
+    // DOMs
+    let clearBtn = document.getElementById('clear');
+    let changeGrid = document.getElementById('change_grid');
+    let colorSelector = document.getElementById('color_selector');
+    let grid = document.querySelector('.grid');
+
+    // Grid functions
+    function createGrid(numOfCols) {
+        if (numOfCols) {
+            destroyAllChildren(grid);
+            grid.style.cssText = `grid-template-columns: repeat(${numOfCols}, 1fr);`;
+            for (let i = 0; i < numOfCols * numOfCols; i++) {
+                const cell = createCell();
+                grid.appendChild(cell);
+            }
+        };
+
+        function destroyAllChildren(parent) {
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
+        };
+
+        function createCell() {
+            const cell = document.createElement('div');
+            cell.style.backgroundColor = 'white'
+            cell.classList.add('cell');
+            changeColorOnHover(cell);
+            return cell;
+        };
+
+        function changeColorOnHover(element) {
+            element.addEventListener('mouseenter', function (e) {
+                if (colorSelector.value == 1) {
+                    e.target.style.backgroundColor = 'black';
+                } else if (colorSelector.value == 2) {
+                    e.target.style.backgroundColor = getRandomColor();
+                }
+            });
+        };
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        };
+    }
+
+    //Event listeners
+    clearBtn.addEventListener('click', function () {
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach((cell) => { cell.style.backgroundColor = 'white' });
+    });
+
+    changeGrid.addEventListener('click', () => createGrid(prompt('Please, enter number of columns:')))
+
+    createGrid(16);
+
+</script>
+
+</html>
