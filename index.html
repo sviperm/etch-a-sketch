@@ -144,9 +144,8 @@
         if (numOfCols) {
             destroyAllChildren(grid);
             grid.style.cssText = `grid-template-columns: repeat(${numOfCols}, 1fr);`;
-            for (let i = 0; i < numOfCols * numOfCols; i++) {
-                const cell = createCell();
-                grid.appendChild(cell);
+            for (let i = 0, maxElements = numOfCols * numOfCols; i < maxElements; i++) {
+                grid.appendChild(createCell());
             }
         };
 
