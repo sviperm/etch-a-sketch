@@ -160,11 +160,11 @@
             const cell = document.createElement('div');
             cell.style.backgroundColor = 'white'
             cell.classList.add('cell');
-            changeColorOnHover(cell);
+            changeColorOnHoverEvent(cell);
             return cell;
         };
 
-        function changeColorOnHover(element) {
+        function changeColorOnHoverEvent(element) {
             element.addEventListener('mouseenter', function (e) {
                 if (colorSelector.value == 1) {
                     e.target.style.backgroundColor = 'black';
