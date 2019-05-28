@@ -135,7 +135,7 @@
 <script>
     // DOMs
     let clearBtn = document.getElementById('clear');
-    let changeGrid = document.getElementById('change_grid');
+    let changeGridBtn = document.getElementById('change_grid');
     let colorSelector = document.getElementById('color_selector');
     let grid = document.querySelector('.grid');
 
@@ -189,7 +189,7 @@
         cells.forEach((cell) => { cell.style.backgroundColor = 'white' });
     });
 
-    changeGrid.addEventListener('click', () => createGrid(prompt('Please, enter number of columns:')))
+    changeGridBtn.addEventListener('click', () => createGrid(prompt('Please, enter number of columns:')))
 
     createGrid(16);
 
