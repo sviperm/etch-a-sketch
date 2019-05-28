@@ -183,11 +183,13 @@
         };
     }
 
-    //Event listeners
-    clearBtn.addEventListener('click', function () {
+    function clearGrid() {
         const cells = document.querySelectorAll('.cell');
         cells.forEach((cell) => { cell.style.backgroundColor = 'white' });
-    });
+    };
+
+    //Event listeners
+    clearBtn.addEventListener('click', clearGrid);
 
     changeGridBtn.addEventListener('click', () => createGrid(prompt('Please, enter number of columns:')))
 
